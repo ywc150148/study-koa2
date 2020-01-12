@@ -3,8 +3,8 @@ const router = new Router()
 
 // 引入控制器
 router
-  .get('/', require('./controller/get'))
-  .get('/test', require('./controller/test'))
-  .post('/', require('./controller/post'))
+  .get('/', require('./action/get'))
+  .get('/test', require('./action/test'))
+  .post('/', require('./action/post'))
 
 module.exports = router

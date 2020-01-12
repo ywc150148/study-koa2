@@ -1,6 +1,9 @@
 # 学习koa2
 后面学习、加入更多常用的功能
 
+# list
+1. 中间件
+2. 路由
 
 # 克隆
 git clone https://github.com/ywc150148/study-koa2.git

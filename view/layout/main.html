@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>
+    {% if title %}
+    {{title}}
+    {% else %}
+    默认标题
+    {% endif %}
+  </title>
+  <link rel="stylesheet" href="/css/common.css">
+</head>
+
+<body>
+  {% block header %}
+  <header>
+    <h1>头部|<a href="/">首页</a><a href="/reg">注册</a><a href="/login">登录</a><a href="/users">用户列表</a></h1>
+  </header>
+  {% endblock %}
+
+  <main>
+    {% block body %}
+    <p>这里是mian的body，你使用super()把我保存了下来</p>
+    {% endblock %}
+  </main>
+
+  {% block footer %}
+  <footer>
+    copyright 2019
+  </footer>
+  {% endblock %}
+</body>
+
+</html>

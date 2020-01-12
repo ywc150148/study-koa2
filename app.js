@@ -1,7 +1,7 @@
 const Koa = require('koa'); 
 const app = new Koa(); 
 const router =  require('./router') // 路由
-require('./middleware')(app) // 中间件
+require('./middleware')(app) // 自定义中间件
 
 // logger
 app.use(async (ctx, next) => {
@@ -10,11 +10,6 @@ app.use(async (ctx, next) => {
   const ms = Date.now() - start;
   ctx.set('X-Response-Time', `${ms}ms`);
   console.log(`请求方式：${ctx.method};\n\r请求路径： ${ctx.url};\n\r响应时间：${ms}ms;`);
-});
-
-// x-response-time
-app.use(async (ctx, next) => {
-  await next();
 });
 
 // 继续触发error事件
