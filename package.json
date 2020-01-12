@@ -1,5 +1,5 @@
 {
-  "name": "restfulapi",
+  "name": "study-koa2",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,12 +12,13 @@
   "dependencies": {
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.8.2",
-    "koa-bodyparser": "^3.2.0",
+    "koa-body": "^4.1.1",
     "koa-nunjucks-2": "^3.0.2",
     "koa-router": "^7.4.0",
     "koa-session": "^5.12.3",
     "koa-static": "^5.0.0",
-    "koa2-cors": "^2.0.6"
+    "koa2-cors": "^2.0.6",
+    "moment": "^2.24.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.3"

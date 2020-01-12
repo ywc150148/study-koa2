@@ -1,3 +1,5 @@
 module.exports = async (ctx, next) => {
-  ctx.response.body = '<h5>home/get---</h5>';
+  await ctx.render('home', {
+    title: "首页"
+  });
 }

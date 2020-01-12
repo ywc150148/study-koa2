@@ -1,3 +1,4 @@
 module.exports = async (ctx, next) => {
-  ctx.response.body = '<h5>home/post---</h5>';
+  let rq =  ctx.request.body
+  return ctx.body =rq
 }

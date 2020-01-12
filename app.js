@@ -2,7 +2,6 @@ const Koa = require('koa');
 const app = new Koa(); 
 const router =  require('./router') // 路由
 require('./middleware')(app) // 自定义中间件
-
 // logger
 app.use(async (ctx, next) => {
   const start = Date.now(); 
@@ -15,11 +14,14 @@ app.use(async (ctx, next) => {
 // 继续触发error事件
 app.on('error',(err,ctx) => {
   // console.error('server error-------', err.message);
-  // console.error('err-------',err.toString());
+  console.error('err-------',err.toString());
 });
 
 router(app) // 实例化路由
 
-app.listen(3000,()=>{
-  console.log('This server is running at http://localhost:' + 3000)
+
+const port = process.env.PORT||3000
+
+app.listen(port,()=>{
+  console.log('This server is running at http://localhost:' + port)
 });

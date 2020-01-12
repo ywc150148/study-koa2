@@ -4,6 +4,11 @@
 # list
 1. 中间件
 2. 路由
+3. 请求信息处理
+4. 配置静态文件访问
+5. 跨域
+6. 模板引擎
+7. 代码热更新
 
 # 克隆
 git clone https://github.com/ywc150148/study-koa2.git
