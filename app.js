@@ -15,6 +15,10 @@ app.use(async (ctx, next) => {
 app.on('error',(err,ctx) => {
   // console.error('server error-------', err.message);
   console.error('err-------',err.toString());
+
+  return ctx.body  = {
+    msg:err.toString()
+  }
 });
 
 router(app) // 实例化路由
