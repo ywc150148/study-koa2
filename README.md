@@ -18,3 +18,5 @@ git commit -m "first commit"
 git remote add origin https://github.com/xxx/xxx.git
 git push -u origin master
 git pull 拉取线上版本覆盖本地
+
+# 由于项目中有些内容涉及个人账户密码、密钥等等，所有我将敏感数据集合在一个文件，不上传
