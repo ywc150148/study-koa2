@@ -19,4 +19,8 @@ git remote add origin https://github.com/xxx/xxx.git
 git push -u origin master
 git pull 拉取线上版本覆盖本地
 
-# 由于项目中有些内容涉及个人账户密码、密钥等等，所有我将敏感数据集合在一个文件，不上传
+# 注意
+由于项目中有些内容涉及个人账户密码、密钥等等，所有我将敏感数据集合在一个文件，不上传
+根目录key/index.js文件未上传，需要自定义
+> - key/index.js 不上传
+  - key/readme.md 已上传，告诉你key/index.js怎么写
