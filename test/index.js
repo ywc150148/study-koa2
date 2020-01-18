@@ -15,3 +15,10 @@
 // let data = fs.readFileSync(filePath);
 // const tags = ExifReader.load(data, {expanded: true});
 // console.log("tags",tags)
+var path = require('path');
+const { dirExists, saveFile } = require('../lib/index')
+let tmp =  path.resolve('../static/upload/tmp');
+console.log("tmp:",tmp)
+dirExists(tmp).then(res=>{
+  console.log("res",res)
+})

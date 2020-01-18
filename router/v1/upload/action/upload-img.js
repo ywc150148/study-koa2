@@ -1,9 +1,9 @@
 const fs = require('fs')
 const path = require('path')
 const moment = require('moment');
-const { asyncStat, formatBytes, saveFile,getExif } = require('../../../../lib')
+const { asyncStat, formatBytes, saveFile } = require('../../../../lib')
 const { put} = require('../../../../lib/oss')
-const imgexifread = require('../../../../lib/imgexifread')
+// const imgExifRead = require('../../../../lib/imgexifread')
 const {domain} = require('../../../../config')
 require('moment/locale/zh-cn')
 moment.locale('zh-cn');
@@ -29,8 +29,8 @@ module.exports = async (ctx, next) => {
   // saveRes.err && ctx.throw(500,saveRes.msg)
 
   // 读取图片exif
-  let exif = await imgexifread(file.path)
-
+  // let exif = await imgExifRead(file.path)
+  
   const ossFolder = 'upload/images/' // oss 文件夹
   const ossUploadFileName = ossFolder + fileName // 上传oss文件的路径+名称
 
@@ -52,13 +52,13 @@ module.exports = async (ctx, next) => {
     data: {
       upload_time: moment(time).format("YYYY-MM-DD HH:mm:ss"),
       create_time: time,
+      time_cost:Date.now() - time + 'ms',
       file_format:fileFormat,
       file_size:statRes.size,
       size,
       name:ossResult.data.name,
       url:domain+ossResult.data.name,
-      oss_url:ossResult.data.url,
-      exif
+      oss_url:ossResult.data.url
     }
   };
 }

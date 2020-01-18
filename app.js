@@ -11,14 +11,20 @@ app.use(async (ctx, next) => {
   console.log(`请求方式：${ctx.method};\n\r请求路径： ${ctx.url};\n\r响应时间：${ms}ms;`);
 });
 
-// 继续触发error事件
+// 触发error事件
 app.on('error',(err,ctx) => {
-  // console.error('server error-------', err.message);
-  console.error('err-------',err.toString());
-
-  return ctx.body  = {
-    msg:err.toString()
+  let data = {
+    stats:false,
+    code:err.statusCode || err.status || 500,
+    msg:err.msg||err.message||'fail',
+    err:err.err||err,
   }
+
+  if(err.tips){
+    data.tips = err.tips
+  }
+  
+  return ctx.body  = data
 });
 
 router(app) // 实例化路由

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<header>
+  <meta charset="utf-8">
+  <title>图片上传</title>
+  <style>
+    #preview-warp {
+      padding: 20px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 780px;
+      min-height: 300px;
+      margin: 0 auto;
+      background: #f8f8f8;
+      text-align: center;
+      position: relative;
+    }
+
+    .box::before {
+      content: "上传图片";
+      width: 100%;
+      height: 50px;
+      margin-top: -25px;
+      top: 50%;
+      left: 0;
+      position: absolute;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: #555555;
+    }
+
+    #preview {
+      max-width: 100%;
+      margin: 0 auto;
+      display: block;
+      position: relative;
+      z-index: 20;
+    }
+
+    .file-input {
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      position: absolute;
+      z-index: 10;
+      background: none;
+      opacity: 0;
+    }
+
+    .btn-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .btn {
+      width: 200px;
+      max-width: 45%;
+      height: 46px;
+      line-height: 46px;
+      margin: 20px 5px;
+      text-align: center;
+      background: rgb(10, 122, 226);
+      border: none;
+      border-radius: 5px;
+      color: #ffffff;
+      font-size: 18px;
+      display: inline-block;
+      position: relative;
+    }
+
+    #image-info {
+      padding: 20px;
+      text-align: left;
+    }
+
+    #upload-info {
+      padding: 20px;
+      text-align: left;
+    }
+
+
+    #upload-info li {
+      margin-bottom: 10px;
+      padding: 10px;
+      background: #f8f8f8;
+    }
+
+    .upload-info-key {
+      /* display: inline-block; */
+    }
+
+    .upload-info-value {
+      /* display: inline-block; */
+    }
+  </style>
+</header>
+
+<body>
+  <div id="preview-warp">
+    <div class="box">
+      <img id="preview">
+      <input type="file" accept="image/*" name="file" id="file" class="file-input" />
+    </div>
+  </div>
+
+  <div class="btn-wrap">
+    <div class="btn">
+      <input type="file" accept="image/*" name="file" id="file-2" class="file-input" />
+      选择图片
+    </div>
+    <div onclick="post()" id="button" class="btn">
+      上传
+    </div>
+
+    <div id="image-info"></div>
+    <div id="upload-info"></div>
+  </div>
+
+  <script>
+
+
+    var form = null;
+    var fileDom = document.getElementById("file"),
+      fileDom2 = document.getElementById("file-2"),
+      previewDom = document.getElementById("preview"),
+      imageInfo = document.getElementById("image-info"),
+      uploadInfo = document.getElementById("upload-info"),
+      isLock = false // 防抖
+
+    fileDom.addEventListener("change", change)
+    fileDom2.addEventListener("change", change)
+
+
+    function change() {
+      var file = this.files[0];
+      form = new FormData()
+      form.append("file", file)
+
+      // 不是图片退出
+      if (!file || file.type.indexOf("image/") < 0) {
+        fileDom.value = "";
+        previewDom.src = "";
+        return;
+      }
+
+      // use FileReader to load image and show preview of the image
+      var fileReader = new FileReader();
+      fileReader.onload = e => {
+        previewDom.src = e.target.result;
+      };
+      fileReader.readAsDataURL(file);
+    }
+
+    function post() {
+
+      if (isLock === true) {
+        console.log('上一个任务未结束')
+        return false
+      }
+
+      if (!form.get("file")) {
+        console.log('没有文件，不能上传', form.get("file"))
+        return false
+      }
+
+
+      imageInfo.innerHTML = '上传中...'
+      isLock = true
+
+      //上传的路径:http://127.0.0.1:8081/exif
+      var uploadUrl = '/exif';
+      try {
+        var xhr;
+        if (window.XMLHttpRequest) {
+          xhr = new XMLHttpRequest();
+        } else if (window.ActiveXObject) {
+          xhr = new ActiveXObject("Microsoft.XMLHttpRequest");
+        } else {
+          console.warn('浏览器版本太低', err);
+          return;
+        }
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            const result = JSON.parse(xhr.responseText);
+            console.log('result', result);
+            if (xhr.status === 200) {
+              if (result.status) {
+
+                imageInfo.innerHTML = ''
+                uploadInfo.innerHTML = ''
+                // 上传成功
+                console.log('上传成功', result);
+                if (result.data.list) {
+                  // exif imageInfo
+                  let exif = result.data.list
+                  let ul = document.createElement('ul');
+                  let p = document.createElement('p');
+                  p.innerHTML = "图片exif信息"
+
+
+                  imageInfo.appendChild(p)
+                  exif.forEach((item,index)=>{
+                    
+                    let li = document.createElement('li');
+                    let p1 = document.createElement('p');
+                    let p2 = document.createElement('p');
+                    let p3 = document.createElement('p');
+                    let name = item.name? `(${item.name})` :''
+                    p1.innerHTML = 'name：' +item.key + name
+                    p2.innerHTML = 'value：' + exif[key].value
+                    p3.innerHTML = 'description：' + exif[key].description
+
+                  })
+
+
+
+
+                  for (let key in exif) {
+                    let li = document.createElement('li');
+                    let p1 = document.createElement('p');
+                    let p2 = document.createElement('p');
+                    let p3 = document.createElement('p');
+                    p1.innerHTML = 'name：' + key
+                    p2.innerHTML = 'value：' + exif[key].value
+                    p3.innerHTML = 'description：' + exif[key].description
+                    li.appendChild(p1)
+                    li.appendChild(p2)
+                    li.appendChild(p3)
+                    ul.appendChild(li)
+                  }
+                  imageInfo.appendChild(ul)
+                } else {
+                  imageInfo.innerHTML = '上传成功'
+                }
+
+                if (result.data) {
+                  let ul = document.createElement('ul');
+                  let p = document.createElement('p');
+                  p.innerHTML = "图片上传信息"
+                  for (let key in result.data) {
+                    if (Object.prototype.toString.call(result.data[key]) !== '[object Object]') {
+                      let li = document.createElement('li');
+                      let p1 = document.createElement('p');
+                      let p2 = document.createElement('p');
+                      p1.classList = "upload-info-key"
+                      p2.classList = "upload-info-value"
+                      p1.innerHTML = 'key：' + key
+                      p2.innerHTML = 'value：' + result.data[key]
+                      li.appendChild(p1)
+                      li.appendChild(p2)
+                      ul.appendChild(li)
+                    }
+                  }
+                  uploadInfo.appendChild(p)
+                  uploadInfo.appendChild(ul)
+                }
+
+              }
+              isLock = false
+            } else {
+              // 上传失败
+              console.log('上传失败', result);
+
+              imageInfo.innerHTML = result.msg
+              isLock = false
+            }
+          }
+        };
+
+        xhr.withCredentials = false;
+        xhr.open("POST", uploadUrl, true);
+        // xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        // xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+        xhr.send(form);
+      } catch (err) {
+        console.warn('错误：', err);
+        imageInfo.innerHTML = '发生错误'
+        isLock = false
+      }
+    }
+
+
+  </script>
+</body>
+
+</html>

@@ -7,5 +7,6 @@ module.exports = (app) => {
   // 引入模块
   router.use('/', require('./home').routes());
   router.use('/upload', require('./upload').routes());
+  router.use('/exif', require('./exif').routes());
 }
 
