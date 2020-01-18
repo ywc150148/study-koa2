@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const moment = require('moment');
-const { asyncStat, formatBytes, saveFile } = require('../../../../lib')
+const { asyncStat, formatBytes, saveFile,getForMat } = require('../../../../lib')
 const { put} = require('../../../../lib/oss')
 // const imgExifRead = require('../../../../lib/imgexifread')
 const {domain} = require('../../../../config')
@@ -11,7 +11,9 @@ moment.locale('zh-cn');
 module.exports = async (ctx, next) => {
   // 单个文件上传
   const file = ctx.request.files.file; // 获取上传文件
-  const fileFormat = file.name.split('.')[1] || 'jpeg' // 图片格式
+  console.log("file",file)
+  const fileFormat = getForMat(file.name) // 图片格式
+  console.log("file.name.split('.')",file.name.split('.'))
   const time = new Date().getTime()
   const uploadTime = moment(time).format("YYYY-MM-DD-HH-mm-ss"); // 日期
   const randomNumber = Math.floor(Math.random() * 1000 + 1); // 随机数
@@ -58,7 +60,7 @@ module.exports = async (ctx, next) => {
       size,
       name:ossResult.data.name,
       url:domain+ossResult.data.name,
-      oss_url:ossResult.data.url
+      oss_url:ossResult.data.url,
     }
   };
 }

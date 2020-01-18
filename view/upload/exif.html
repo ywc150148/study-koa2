@@ -2,7 +2,7 @@
 <html>
 <header>
   <meta charset="utf-8">
-  <title>图片上传</title>
+  <title>图片exif读取</title>
   <style>
     #preview-warp {
       padding: 20px;
@@ -80,24 +80,23 @@
       text-align: left;
     }
 
+    #image-info ul li {
+      margin-bottom: 10px;
+      padding: 10px;
+      background: #f8f8f8;
+      word-break: break-all;
+    }
+
     #upload-info {
       padding: 20px;
       text-align: left;
     }
 
 
-    #upload-info li {
+    #upload-info ul li {
       margin-bottom: 10px;
       padding: 10px;
       background: #f8f8f8;
-    }
-
-    .upload-info-key {
-      /* display: inline-block; */
-    }
-
-    .upload-info-value {
-      /* display: inline-block; */
     }
   </style>
 </header>
@@ -172,6 +171,7 @@
 
 
       imageInfo.innerHTML = '上传中...'
+      uploadInfo.innerHTML = ''
       isLock = true
 
       //上传的路径:http://127.0.0.1:8081/exif
@@ -193,52 +193,34 @@
             console.log('result', result);
             if (xhr.status === 200) {
               if (result.status) {
-
                 imageInfo.innerHTML = ''
-                uploadInfo.innerHTML = ''
                 // 上传成功
                 console.log('上传成功', result);
-                if (result.data.list) {
+                if (result.data && result.data.list && result.data.list.length>0) {
                   // exif imageInfo
                   let exif = result.data.list
                   let ul = document.createElement('ul');
                   let p = document.createElement('p');
                   p.innerHTML = "图片exif信息"
-
-
                   imageInfo.appendChild(p)
-                  exif.forEach((item,index)=>{
-                    
+                  exif.forEach((item, index) => {
                     let li = document.createElement('li');
                     let p1 = document.createElement('p');
                     let p2 = document.createElement('p');
                     let p3 = document.createElement('p');
-                    let name = item.name? `(${item.name})` :''
-                    p1.innerHTML = 'name：' +item.key + name
-                    p2.innerHTML = 'value：' + exif[key].value
-                    p3.innerHTML = 'description：' + exif[key].description
-
-                  })
-
-
-
-
-                  for (let key in exif) {
-                    let li = document.createElement('li');
-                    let p1 = document.createElement('p');
-                    let p2 = document.createElement('p');
-                    let p3 = document.createElement('p');
-                    p1.innerHTML = 'name：' + key
-                    p2.innerHTML = 'value：' + exif[key].value
-                    p3.innerHTML = 'description：' + exif[key].description
+                    let name = item.name ? item.name : item.key
+                    p1.innerHTML = 'key：' + name
+                    p2.innerHTML = 'value：' + item.value
+                    p3.innerHTML = 'description：' + item.description
                     li.appendChild(p1)
                     li.appendChild(p2)
                     li.appendChild(p3)
                     ul.appendChild(li)
-                  }
+
+                  })
                   imageInfo.appendChild(ul)
                 } else {
-                  imageInfo.innerHTML = '上传成功'
+                  imageInfo.innerHTML = '上传成功，没有获取到exif'
                 }
 
                 if (result.data) {
@@ -246,12 +228,10 @@
                   let p = document.createElement('p');
                   p.innerHTML = "图片上传信息"
                   for (let key in result.data) {
-                    if (Object.prototype.toString.call(result.data[key]) !== '[object Object]') {
+                    if (Object.prototype.toString.call(result.data[key]) !== '[object Object]' && key !== 'list') {
                       let li = document.createElement('li');
                       let p1 = document.createElement('p');
                       let p2 = document.createElement('p');
-                      p1.classList = "upload-info-key"
-                      p2.classList = "upload-info-value"
                       p1.innerHTML = 'key：' + key
                       p2.innerHTML = 'value：' + result.data[key]
                       li.appendChild(p1)

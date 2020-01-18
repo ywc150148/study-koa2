@@ -1,6 +1,6 @@
 const path = require('path')
 const moment = require('moment');
-const { asyncStat, formatBytes } = require('../../../../lib') 
+const { asyncStat, formatBytes,getForMat } = require('../../../../lib') 
 const imgExifRead = require('../../../../lib/imgexifread') 
 require('moment/locale/zh-cn')
 moment.locale('zh-cn');
@@ -8,7 +8,7 @@ moment.locale('zh-cn');
 module.exports = async (ctx, next) => {
 
   const file = ctx.request.files.file; // 获取上传文件 
-  const fileFormat = file.name.split('.')[1] || 'jpeg' // 图片格式
+  const fileFormat = getForMat(file.name) // 图片格式
   const time = new Date().getTime() // 时间
 
   // 读取文件大小
@@ -27,8 +27,8 @@ module.exports = async (ctx, next) => {
       err:exif.err
     };
   }
-
-  return ctx.body = {
+  
+  return ctx.response.body = {
     status: true,
     code: 200,
     msg: '图片exif读取成功',

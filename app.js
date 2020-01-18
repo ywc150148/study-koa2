@@ -14,7 +14,7 @@ app.use(async (ctx, next) => {
 // 触发error事件
 app.on('error',(err,ctx) => {
   let data = {
-    stats:false,
+    status:false,
     code:err.statusCode || err.status || 500,
     msg:err.msg||err.message||'fail',
     err:err.err||err,
