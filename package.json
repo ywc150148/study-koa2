@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "run": "set PORT=8082&&pm2 start app.js --name api-app",
     "start": "set PORT=8081&&nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

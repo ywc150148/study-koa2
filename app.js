@@ -30,7 +30,7 @@ app.on('error',(err,ctx) => {
 router(app) // 实例化路由
 
 
-const port = process.env.PORT||3000
+const port = process.env.PORT||8082
 
 app.listen(port,()=>{
   console.log('This server is running at http://localhost:' + port)
