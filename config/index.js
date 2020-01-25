@@ -1,4 +1,4 @@
-const domain = 'https://eoway.cn/'
+const domain = 'http://eoway.cn/'
 
 module.exports ={
   domain

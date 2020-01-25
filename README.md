@@ -26,3 +26,5 @@ git pull 拉取线上版本覆盖本地
 根目录key/index.js文件未上传，需要自定义
 > - key/index.js 不上传
 > - key/readme.md 已上传，告诉你key/index.js怎么写
+
+<!-- https://eoway.cn/upload/images/2020-01-26-00-13-47-rn370.jpeg -->
