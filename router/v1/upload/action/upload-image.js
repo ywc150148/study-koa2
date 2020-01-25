@@ -11,9 +11,9 @@ moment.locale('zh-cn');
 module.exports = async (ctx, next) => {
   // 单个文件上传
   const file = ctx.request.files.file; // 获取上传文件
-  console.log("file",file)
+  // console.log("file",file)
   const fileFormat = getForMat(file.name) // 图片格式
-  console.log("file.name.split('.')",file.name.split('.'))
+  // console.log("file.name.split('.')",file.name.split('.'))
   const time = new Date().getTime()
   const uploadTime = moment(time).format("YYYY-MM-DD-HH-mm-ss"); // 日期
   const randomNumber = Math.floor(Math.random() * 1000 + 1); // 随机数

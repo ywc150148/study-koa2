@@ -27,8 +27,9 @@ module.exports = async (ctx, next) => {
       err:exif.err
     };
   }
-  
+
   return ctx.response.body = {
+    back:ctx.request,
     status: true,
     code: 200,
     msg: '图片exif读取成功',

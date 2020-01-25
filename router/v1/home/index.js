@@ -5,5 +5,9 @@ const router = new Router()
 router
   .get('/', require('./action/get'))
   .post('/', require('./action/post'))
+  .post('test', require('./action/test'))
 
 module.exports = router
+
+
+
