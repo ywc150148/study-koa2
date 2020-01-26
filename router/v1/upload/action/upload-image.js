@@ -61,6 +61,7 @@ module.exports = async (ctx, next) => {
       name:ossResult.data.name,
       url:domain+ossResult.data.name,
       oss_url:ossResult.data.url,
+      v:'0.0.1'
     }
   };
 }
