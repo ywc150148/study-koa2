@@ -1,4 +1,4 @@
-const domain = 'http://eoway.cn/'
+const domain = 'https://oss.eoway.cn/' // 阿里云oss
 
 module.exports ={
   domain
